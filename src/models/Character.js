@@ -29,8 +29,8 @@ export const Character = sequelize.define(
       type: DataTypes.STRING,
     },
   },
-  {
-    timestamps: false,
+  { 
+    timestamps: false
   }
 );
 
