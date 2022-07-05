@@ -11,6 +11,6 @@ app.use(express.json());
 app.use("/characters", characterRoutes);
 app.use("/movies", movieRoutes);
 app.use("/genres", genreRoutes);
-app.use("/", authRoutes);
+app.use("/auth", authRoutes);
 
 export default app;
