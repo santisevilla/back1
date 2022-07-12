@@ -17,7 +17,9 @@ export const getCharacters = async (req, res) => {
         return res.status(200).json("Character not found");
       }
     }
-    return res.status(200).json(characters);
+    characters.length > 0
+      ? res.status(200).json(characters)
+      : res.status(201).json("No hay personajes creados");
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
@@ -43,6 +45,10 @@ export const getCharacterById = async (req, res) => {
 export const postCharacter = async (req, res) => {
   const { image, name, age, weight, history } = req.body;
   try {
+    if (!image || !name || !age || !weight || !history) {
+      return res.status(404).json({ message: "Empty data is not allowed" });
+    }
+    const characters = await Character.findAll();
     const newCharacter = await Character.create({
       image,
       name,
@@ -50,10 +56,13 @@ export const postCharacter = async (req, res) => {
       weight,
       history,
     });
-    if (!image || !name || !age || !weight || !history) {
-      return res.status(404).json({ message: "Empty data is not allowed" });
+    for (let i = 0; i < characters.length; i++) {
+      if (newCharacter !== characters[i]) {
+        return res.status(200).json("Personaje creado");
+      } else {
+        return res.status(404).json("El personaje ya está creado");
+      }
     }
-    return res.status(204).send(newCharacter);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -63,6 +72,7 @@ export const updateCharacter = async (req, res) => {
   const { id } = req.params;
   const { image, name, age, weight, history } = req.body;
   try {
+    const characterId = await Character.findByPk(id);
     const character = await Character.update(
       { image, name, age, weight, history },
       {
@@ -71,7 +81,10 @@ export const updateCharacter = async (req, res) => {
         },
       }
     );
-    return res.status(200).json(character);
+    if (characterId !== character) {
+      return res.status(200).json("Cambios realizados");
+    }
+    return res.status(201).json("No se ha cambiado nada");
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
