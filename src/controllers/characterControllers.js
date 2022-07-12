@@ -49,18 +49,26 @@ export const postCharacter = async (req, res) => {
       return res.status(404).json({ message: "Empty data is not allowed" });
     }
     const characters = await Character.findAll();
-    const newCharacter = await Character.create({
+    const newCharacter1 = {
       image,
       name,
       age,
       weight,
       history,
-    });
+    };
+    console.log(newCharacter1);
     for (let i = 0; i < characters.length; i++) {
-      if (newCharacter !== characters[i]) {
-        return res.status(200).json("Personaje creado");
-      } else {
+      if (newCharacter1 === characters[i]) {
         return res.status(404).json("El personaje ya está creado");
+      } else {
+        const characterCreated = await Character.create({
+          image,
+          name,
+          age,
+          weight,
+          history,
+        });
+        return res.status(200).json("Personaje creado");
       }
     }
   } catch (error) {
@@ -73,6 +81,7 @@ export const updateCharacter = async (req, res) => {
   const { image, name, age, weight, history } = req.body;
   try {
     const characterId = await Character.findByPk(id);
+    console.log(characterId);
     const character = await Character.update(
       { image, name, age, weight, history },
       {
@@ -83,8 +92,9 @@ export const updateCharacter = async (req, res) => {
     );
     if (characterId !== character) {
       return res.status(200).json("Cambios realizados");
+    } else {
+      return res.status(201).json("No se ha cambiado nada");
     }
-    return res.status(201).json("No se ha cambiado nada");
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
