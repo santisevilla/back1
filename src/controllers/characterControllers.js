@@ -82,7 +82,6 @@ export const updateCharacter = async (req, res) => {
   const { image, name, age, weight, history } = req.body;
   try {
     const characterId = await Character.findByPk(id);
-    console.log(characterId);
     const character = await Character.update(
       { image, name, age, weight, history },
       {
