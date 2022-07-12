@@ -49,6 +49,7 @@ export const postCharacter = async (req, res) => {
       return res.status(404).json({ message: "Empty data is not allowed" });
     }
     const characters = await Character.findAll();
+    console.log(characters)
     const newCharacter1 = {
       image,
       name,
