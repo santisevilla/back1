@@ -4,6 +4,7 @@ import { Movie } from "../models/Movie.js";
 export const getCharacters = async (req, res) => {
   try {
     const { name } = req.query;
+    const { age } = req.query;
     const characters = await Character.findAll();
     if (name) {
       const characterName = await Character.findAll({
@@ -14,7 +15,18 @@ export const getCharacters = async (req, res) => {
       if (characterName) {
         return res.status(200).json(characterName);
       } else {
-        return res.status(200).json("Character not found");
+        return res.status(404).json("Character not found");
+      }
+    } else if (age) {
+      const characterAge = await Character.findAll({
+        where: {
+          age,
+        },
+      });
+      if (characterAge) {
+        return res.status(200).json(characterAge);
+      } else {
+        return res.status(404).json("Character not found");
       }
     }
     characters.length > 0
@@ -49,29 +61,37 @@ export const postCharacter = async (req, res) => {
       return res.status(404).json({ message: "Empty data is not allowed" });
     }
     const characters = await Character.findAll();
-    console.log(characters)
-    const newCharacter1 = {
+    const characterCreated = await Character.create({
       image,
       name,
       age,
       weight,
       history,
-    };
-    console.log(newCharacter1);
-    for (let i = 0; i < characters.length; i++) {
-      if (newCharacter1 === characters[i]) {
-        return res.status(404).json("El personaje ya está creado");
-      } else {
-        const characterCreated = await Character.create({
-          image,
-          name,
-          age,
-          weight,
-          history,
-        });
-        return res.status(200).json("Personaje creado");
-      }
-    }
+    });
+    // console.log(characters);
+    // const newCharacter1 = {
+    //   image,
+    //   name,
+    //   age,
+    //   weight,
+    //   history,
+    // };
+    // console.log(newCharacter1);
+    // for (let i = 0; i < characters.length; i++) {
+    //   if (newCharacter1 === characters[i]) {
+    //     return res.status(404).json("El personaje ya está creado");
+    //   } else {
+    //     const characterCreated = await Character.create({
+    //       image,
+    //       name,
+    //       age,
+    //       weight,
+    //       history,
+    //     });
+    //     return res.status(200).json("Personaje creado");
+    //   }
+    // }
+    return res.status(200).json(characterCreated);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -82,19 +102,27 @@ export const updateCharacter = async (req, res) => {
   const { image, name, age, weight, history } = req.body;
   try {
     const characterId = await Character.findByPk(id);
-    const character = await Character.update(
-      { image, name, age, weight, history },
-      {
-        where: {
-          id,
-        },
-      }
-    );
-    if (characterId !== character) {
-      return res.status(200).json("Cambios realizados");
-    } else {
+    console.log(characterId);
+    const character = {
+      image,
+      name,
+      age,
+      weight,
+      history,
+    };
+    if (characterId === character) {
       return res.status(201).json("No se ha cambiado nada");
+    } else {
+      let character = await Character.update(
+        { image, name, age, weight, history },
+        {
+          where: {
+            id,
+          },
+        }
+      );
     }
+    return res.status(200).json("Cambios realizados");
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
@@ -110,8 +138,9 @@ export const deleteCharacter = async (req, res) => {
     });
     if (!character) {
       return res.status(404).json({ message: "Enter an existing id" });
+    } else {
+      return res.status(204).json("Eliminado");
     }
-    return res.status(204).send("Ok");
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
