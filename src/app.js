@@ -1,5 +1,4 @@
 import express from "express";
-import exphbs from "express-handlebars";
 import path from "path";
 import {fileURLToPath} from 'url';
 import morgan from "morgan";
@@ -12,19 +11,8 @@ import authRoutes from "../src/routes/authRoutes.js";
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
 //settings
-// app.set("views", path.join(__dirname, "views"));
-// app.engine(
-//   ".hbs",
-//   exphbs({
-//     defaultLayout: "main",
-//     layoutsDir: path.join(app.get("views"), "layouts"),
-//     partialsDir: path.join(app.get("views"), "partials"),
-//     extname: ".hbs",
-//     helpers: require("./lib/handlebars.js"),
-//   })
-// );
-// app.set("view engine", ".hbs");
 
 //middlewars
 app.use(express.json());
