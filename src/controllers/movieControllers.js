@@ -1,7 +1,7 @@
-import { Movie } from "../models/Movie.js";
-import { Genre } from "../models/Genre.js";
+const { Movie } = require("../models/Movie.js");
+const { Genre } = require("../models/Genre.js");
 
-export const getMovies = async (req, res) => {
+const getMovies = async (req, res) => {
   try {
     const movies = await Movie.findAll();
     movies.length > 0
@@ -12,7 +12,7 @@ export const getMovies = async (req, res) => {
   }
 };
 
-export const getMovieById = async (req, res) => {
+const getMovieById = async (req, res) => {
   try {
     const { id } = req.params;
     const movie = await Movie.findOne({
@@ -29,7 +29,7 @@ export const getMovieById = async (req, res) => {
   }
 };
 
-export const postMovie = async (req, res) => {
+const postMovie = async (req, res) => {
   try {
     const { image, title, date, rating, characterId } = req.body;
     if (!image || !title || !date || !rating || !characterId) {
@@ -52,7 +52,7 @@ export const postMovie = async (req, res) => {
   }
 };
 
-export const updateMovie = async (req, res) => {
+const updateMovie = async (req, res) => {
   const { id } = req.params;
   const { image, title, date, rating } = req.body;
   try {
@@ -76,7 +76,7 @@ export const updateMovie = async (req, res) => {
   }
 };
 
-export const deleteMovie = async (req, res) => {
+const deleteMovie = async (req, res) => {
   const { id } = req.params;
   try {
     if (id) {
@@ -94,7 +94,7 @@ export const deleteMovie = async (req, res) => {
   }
 };
 
-export const orderByTitleMovie = async (req, res) => {
+const orderByTitleMovie = async (req, res) => {
   try {
     const { ordenamiento } = req.params;
     const movieOrder = await Movie.findAll({
@@ -108,7 +108,7 @@ export const orderByTitleMovie = async (req, res) => {
   }
 };
 
-export const orderByDateMovie = async (req, res) => {
+const orderByDateMovie = async (req, res) => {
   try {
     const { ordenamiento } = req.params;
     const movieOrder = await Movie.findAll({
@@ -122,7 +122,7 @@ export const orderByDateMovie = async (req, res) => {
   }
 };
 
-export const orderByRatingMovie = async (req, res) => {
+const orderByRatingMovie = async (req, res) => {
   try {
     const { ordenamiento } = req.params;
     const movieOrder = await Movie.findAll({
@@ -136,7 +136,7 @@ export const orderByRatingMovie = async (req, res) => {
   }
 };
 
-export const getGenresMovie = async (req, res) => {
+const getGenresMovie = async (req, res) => {
   try {
     const { id } = req.params;
     const genresMovies = await Genre.findAll({
@@ -149,3 +149,15 @@ export const getGenresMovie = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
+
+module.exports = {
+  getMovies,
+  getGenresMovie,
+  getMovieById,
+  orderByDateMovie,
+  orderByRatingMovie,
+  orderByTitleMovie,
+  postMovie,
+  updateMovie,
+  deleteMovie
+}

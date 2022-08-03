@@ -1,5 +1,5 @@
-import { Router } from "express";
-import {
+const { Router } = require ("express");
+const {
   deleteCharacter,
   getCharacterById,
   getCharacters,
@@ -10,7 +10,7 @@ import {
   orderByWeightCharacter,
   postCharacter,
   updateCharacter,
-} from "../controllers/characterControllers.js";
+} = require ("../controllers/characterControllers.js");
 const router = Router();
 
 router.get("/", getCharacters);
@@ -24,4 +24,4 @@ router.get("/order/age/:ordenamiento", orderByAgeCharacter);
 router.get("/order/weight/:ordenamiento", orderByWeightCharacter);
 router.get("/:id/movies", getMoviesCharacter)
 
-export default router;
+module.exports = router;

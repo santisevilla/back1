@@ -1,12 +1,12 @@
-import { Router } from "express";
-import {
+const { Router } = require ("express");
+const {
   deleteGenre,
   filterGenre,
   getGenreById,
   getGenres,
   postGenre,
   updateGenre,
-} from "../controllers/genreControllers.js";
+} = require ("../controllers/genreControllers.js");
 
 const router = Router();
 
@@ -17,4 +17,4 @@ router.put("/:id", updateGenre);
 router.delete("/:id", deleteGenre);
 router.get("/filter/:filtro", filterGenre);
 
-export default router;
+module.exports = router;

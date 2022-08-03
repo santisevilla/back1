@@ -1,9 +1,9 @@
-import { Router } from "express";
-import characterRoutes from "./characterRoutes.js";
-import movieRoutes from "./movieRoutes.js";
-import genreRoutes from "./genreRoutes.js";
-import userRoutes from "./userRoutes.js";
-import authRoutes from "./authRoutes";
+const { Router } = require("express");
+const characterRoutes = require("./characterRoutes.js");
+const movieRoutes = require("./movieRoutes.js");
+const genreRoutes = require("./genreRoutes.js");
+const userRoutes = require("./userRoutes.js");
+const authRoutes = require("./authRoutes");
 
 const router = Router();
 
@@ -13,4 +13,4 @@ router.use("/genres", genreRoutes);
 router.use("/users", userRoutes);
 router.use("/auth", authRoutes);
 
-export default router;
+module.exports = router;

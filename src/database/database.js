@@ -1,6 +1,8 @@
-import Sequelize from 'sequelize'
+const Sequelize = require("sequelize");
 
-export const sequelize = new Sequelize('disney', 'postgres', '40070859',{
-    host: 'localhost',
-    dialect: 'postgres'
-})
+const sequelize = new Sequelize("disney", "postgres", "40070859", {
+  host: "localhost",
+  dialect: "postgres",
+});
+
+module.exports = sequelize;

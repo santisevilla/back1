@@ -1,8 +1,8 @@
-import { DataTypes } from "sequelize";
-import { sequelize } from "../database/database.js";
-import { Genre } from "./Genre.js";
+const { DataTypes } = require("sequelize");
+const { sequelize } = require("../database/database.js");
+const { Genre } = require("./Genre.js");
 
-export const Movie = sequelize.define(
+const Movie = sequelize.define(
   "movies",
   {
     id: {
@@ -39,3 +39,5 @@ Genre.belongsTo(Movie, {
   foreignKey: "movieId",
   targetId: "id",
 });
+
+module.exports = Movie

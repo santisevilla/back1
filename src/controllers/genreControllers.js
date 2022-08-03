@@ -1,6 +1,6 @@
-import { Genre } from "../models/Genre.js";
+const { Genre } = require ("../models/Genre.js");
 
-export const getGenres = async (req, res) => {
+const getGenres = async (req, res) => {
   try {
     const genres = await Genre.findAll();
     return res.status(200).json(genres);
@@ -9,7 +9,7 @@ export const getGenres = async (req, res) => {
   }
 };
 
-export const getGenreById = async (req, res) => {
+const getGenreById = async (req, res) => {
   try {
     const { id } = req.params;
     const genre = await Genre.findAll({
@@ -23,7 +23,7 @@ export const getGenreById = async (req, res) => {
   }
 };
 
-export const postGenre = async (req, res) => {
+const postGenre = async (req, res) => {
   try {
     const { name, image, movieId } = req.body;
     const genreCreated = await Genre.create({
@@ -37,7 +37,7 @@ export const postGenre = async (req, res) => {
   }
 };
 
-export const updateGenre = async (req, res) => {
+const updateGenre = async (req, res) => {
   try {
     const { id } = req.params;
     const { name, image, movieId } = req.body;
@@ -50,7 +50,7 @@ export const updateGenre = async (req, res) => {
   }
 };
 
-export const deleteGenre = async (req, res) => {
+const deleteGenre = async (req, res) => {
   try {
     const { id } = req.params;
     const genre = await Genre.destroy({
@@ -64,7 +64,7 @@ export const deleteGenre = async (req, res) => {
   }
 };
 
-export const filterGenre = async (req, res) => {
+const filterGenre = async (req, res) => {
   try {
     const { filtro } = req.params;
     const genre = await Genre.findAll({
@@ -77,3 +77,12 @@ export const filterGenre = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
+
+module.exports = {
+  getGenres,
+  getGenreById,
+  filterGenre,
+  deleteGenre,
+  postGenre,
+  updateGenre
+}

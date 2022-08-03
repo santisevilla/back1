@@ -1,7 +1,7 @@
-import { DataTypes } from "sequelize";
-import { sequelize } from "../database/database.js";
+const { DataTypes } = require("sequelize");
+const { sequelize } = require("../database/database.js");
 
-export const Genre = sequelize.define(
+const Genre = sequelize.define(
   "genres",
   {
     id: {
@@ -20,3 +20,5 @@ export const Genre = sequelize.define(
     timestamps: false,
   }
 );
+
+module.exports = Genre

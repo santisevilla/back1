@@ -1,11 +1,11 @@
-import { User } from "../models/User.js";
+const { User } = require("../models/User.js");
 
-export const getUsers = async (req, res) => {
+const getUsers = async (req, res) => {
   const user = await User.findAll();
   return res.status(200).json(user);
 };
 
-export const postUser = async (req, res) => {
+const postUser = async (req, res) => {
   const { email, password } = req.body;
   const user = await User.create({
     email,
@@ -13,3 +13,8 @@ export const postUser = async (req, res) => {
   });
   return res.status(200).json(user);
 };
+
+module.exports = {
+  getUsers,
+  postUser
+}

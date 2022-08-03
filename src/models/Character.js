@@ -1,8 +1,8 @@
-import { DataTypes } from "sequelize";
-import { sequelize } from "../database/database.js";
-import { Movie } from "./Movie.js";
+const { DataTypes } = require("sequelize");
+const { sequelize } = require("../database/database.js");
+const { Movie } = require("./Movie.js");
 
-export const Character = sequelize.define(
+const Character = sequelize.define(
   "characters",
   {
     id: {
@@ -29,8 +29,8 @@ export const Character = sequelize.define(
       type: DataTypes.STRING,
     },
   },
-  { 
-    timestamps: false
+  {
+    timestamps: false,
   }
 );
 
@@ -43,3 +43,5 @@ Movie.belongsTo(Character, {
   foreignKey: "characterId",
   targetId: "id",
 });
+
+module.exports = Character;

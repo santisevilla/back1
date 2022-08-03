@@ -1,7 +1,7 @@
-import { Character } from "../models/Character.js";
-import { Movie } from "../models/Movie.js";
+const { Character } = require ("../models/Character.js");
+const { Movie } = require ("../models/Movie.js");
 
-export const getCharacters = async (req, res) => {
+const getCharacters = async (req, res) => {
   try {
     const { name } = req.query;
     const { age } = req.query;
@@ -37,7 +37,7 @@ export const getCharacters = async (req, res) => {
   }
 };
 
-export const getCharacterById = async (req, res) => {
+const getCharacterById = async (req, res) => {
   const { id } = req.params;
   try {
     const character = await Character.findOne({
@@ -54,7 +54,7 @@ export const getCharacterById = async (req, res) => {
   }
 };
 
-export const postCharacter = async (req, res) => {
+const postCharacter = async (req, res) => {
   const { image, name, age, weight, history } = req.body;
   try {
     if (!image || !name || !age || !weight || !history) {
@@ -97,7 +97,7 @@ export const postCharacter = async (req, res) => {
   }
 };
 
-export const updateCharacter = async (req, res) => {
+const updateCharacter = async (req, res) => {
   const { id } = req.params;
   const { image, name, age, weight, history } = req.body;
   try {
@@ -128,7 +128,7 @@ export const updateCharacter = async (req, res) => {
   }
 };
 
-export const deleteCharacter = async (req, res) => {
+const deleteCharacter = async (req, res) => {
   const { id } = req.params;
   try {
     const character = await Character.destroy({
@@ -146,7 +146,7 @@ export const deleteCharacter = async (req, res) => {
   }
 };
 
-export const orderByIdCharacter = async (req, res, next) => {
+const orderByIdCharacter = async (req, res, next) => {
   const { ordenamiento } = req.params;
   try {
     const characterOrder = await Character.findAll({
@@ -160,7 +160,7 @@ export const orderByIdCharacter = async (req, res, next) => {
   }
 };
 
-export const orderByNameCharacter = async (req, res, next) => {
+const orderByNameCharacter = async (req, res, next) => {
   const { ordenamiento } = req.params;
   try {
     const characterOrder = await Character.findAll({
@@ -174,7 +174,7 @@ export const orderByNameCharacter = async (req, res, next) => {
   }
 };
 
-export const orderByAgeCharacter = async (req, res, next) => {
+const orderByAgeCharacter = async (req, res, next) => {
   const { ordenamiento } = req.params;
   try {
     const characterOrder = await Character.findAll({
@@ -188,7 +188,7 @@ export const orderByAgeCharacter = async (req, res, next) => {
   }
 };
 
-export const orderByWeightCharacter = async (req, res, next) => {
+const orderByWeightCharacter = async (req, res, next) => {
   const { ordenamiento } = req.params;
   try {
     const characterOrder = await Character.findAll({
@@ -202,7 +202,7 @@ export const orderByWeightCharacter = async (req, res, next) => {
   }
 };
 
-export const getMoviesCharacter = async (req, res) => {
+const getMoviesCharacter = async (req, res) => {
   try {
     const { id } = req.params;
     const moviesCharacter = await Movie.findAll({
@@ -215,3 +215,16 @@ export const getMoviesCharacter = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
+
+module.exports = {
+  getCharacters,
+  getCharacterById,
+  getMoviesCharacter,
+  orderByAgeCharacter,
+  orderByIdCharacter,
+  orderByNameCharacter,
+  orderByWeightCharacter,
+  deleteCharacter,
+  updateCharacter,
+  postCharacter
+}
